@@ -1,16 +1,11 @@
-.class-select {
-  width: 200px ;
-}
-.class-option {
+.header {
+  margin: 1em;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+}
 
-  img {
-    width: 32px;
-    height: 32px;
-  }
-
-  span {
-    margin-left: 0.5em;
-  }
+.player-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
 }

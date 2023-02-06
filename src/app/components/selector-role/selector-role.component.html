@@ -1,0 +1,17 @@
+<mat-form-field *ngIf="player.playerClass">
+  <mat-select placeholder="Select role" [(value)]="player.role">
+    <mat-select-trigger class="select-trigger">
+      <img [src]="player.role | roleIcon" alt="not found" />
+      <span>{{ player.role?.type }}</span>
+    </mat-select-trigger>
+    <mat-option
+      *ngFor="let availableRole of player.playerClass.availableRoles"
+      [value]="availableRole"
+    >
+      <div class="select-option">
+        <img [src]="availableRole | roleIcon" alt="not found" />
+        <span>{{ availableRole.type }}</span>
+      </div>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

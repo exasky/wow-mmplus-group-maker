@@ -1,52 +1,34 @@
-<div>
-  <span>Player list</span>
-  <mat-card>
-    <mat-card-header>
-      <mat-form-field>
-      <input matInput placeholder="Player name" [(ngModel)]="creationPlayer.name">
-    </mat-form-field>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-select placeholder="Select class" class="class-select" [(value)]="creationPlayer.playerClass">
-        <mat-option *ngFor="let selectableClass of selectableClasses" [value]="selectableClass">
-          <div class="class-option">
-            <img [src]="selectableClass | classIcon" alt="not found"/>
-            <span>{{selectableClass.name}}</span>
-          </div>
-        </mat-option>
-      </mat-select>
-      <mat-select *ngIf="creationPlayer.playerClass" class="class-select" [(value)]="creationPlayer.role">
-        <mat-option *ngFor="let availableRole of creationPlayer.playerClass.availableRoles" [value]="availableRole">
-          <div class="class-option">
-            <!-- <img [src]="selectableClass | classIcon" alt="not found"/> -->
-            <span>{{availableRole.role}}</span>
-          </div>
-        </mat-option>
-      </mat-select>
-      <!-- {{item.class}}
-      {{item.role}}
-      {{item.iLvl}}
-      {{item.keyLevel}} -->
-    </mat-card-content>
-    <mat-card-actions>
-      <button (click)="addPlayer()">Create</button>
-      <button>Delete</button>
-    </mat-card-actions>
-  </mat-card>
-  {{creationPlayer | json}}
-  {{creationPlayer.playerClass?.name}}
-  {{creationPlayer.playerClass?.availableRoles}}
-  <mat-card *ngFor="let item of players">
-    <mat-card-header>{{item.name}}</mat-card-header>
-    <mat-card-content>
-      {{item.playerClass}}
-      {{item.role}}
-      {{item.iLvl}}
-      {{item.keyLevel}}
-    </mat-card-content>
-    <mat-card-actions>
-      <button>Update</button>
-      <button>Delete</button>
-    </mat-card-actions>
-  </mat-card>
+<mat-toolbar color="primary">
+  <span>Troll a deux têtes - Mythic+ group generator</span>
+</mat-toolbar>
+
+<div class="header">
+  <h2>Player list</h2>
+  <button mat-raised-button color="primary" (click)="exportPlayers()">
+    <mat-icon>upload</mat-icon>Export players
+  </button>
+  <button mat-raised-button color="primary" (click)="fileInput.click()">
+    <mat-icon>download</mat-icon>Import players
+  </button>
+  <input hidden (change)="importPlayers()" #fileInput type="file" id="file">
+  <button mat-raised-button color="primary">Generate groups ></button>
+</div>
+
+<div class="player-list">
+  <player-card
+    [player]="creationPlayer"
+    [editable]="true"
+    [updateButton]="true"
+    updateButtonText="Create"
+    deleteButtonText="Reset"
+    deleteButtonColor="accent"
+    (onUpdate)="addPlayer()"
+    (onDelete)="resetPlayer()"
+  ></player-card>
+
+  <player-card
+    *ngFor="let player of players; let i = index"
+    [player]="player"
+    (onDelete)="deletePlayer(i)"
+  ></player-card>
 </div>

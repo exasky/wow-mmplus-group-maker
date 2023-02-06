@@ -1,0 +1,13 @@
+mat-card {
+  width: fit-content;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-actions {
+  justify-content: flex-end;
+  gap: 5px;
+}

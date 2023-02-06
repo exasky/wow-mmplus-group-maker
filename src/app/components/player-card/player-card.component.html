@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-header>
+    <mat-form-field>
+      <mat-label>Player name</mat-label>
+      <input matInput [(ngModel)]="player.name" [disabled]="!editable" />
+    </mat-form-field>
+  </mat-card-header>
+  <mat-card-content>
+    <selector-class [player]="player" [editable]="editable"></selector-class>
+    <selector-role [player]="player" [editable]="editable"></selector-role>
+    <mat-form-field>
+      <mat-label>Key level</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="player.keyLevel"
+        [disabled]="!editable"
+      />
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button *ngIf="updateButton" mat-raised-button (click)="onUpdate.emit()" color="primary">{{updateButtonText}}</button>
+    <button
+      mat-raised-button
+      [color]="deleteButtonColor"
+      (click)="onDelete.emit()"
+    >
+      {{ deleteButtonText }}
+    </button>
+  </mat-card-actions>
+</mat-card>

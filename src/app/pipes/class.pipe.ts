@@ -20,7 +20,7 @@ import {
   name: 'classIcon',
 })
 export class ClassPipe implements PipeTransform {
-  transform(value: PlayerClass, ...args: any[]): any {
+  transform(value: PlayerClass | undefined, ...args: any[]): any {
     const icon = (() => {
       switch (value) {
         case Warrior:

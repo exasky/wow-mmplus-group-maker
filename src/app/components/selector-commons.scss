@@ -1,0 +1,28 @@
+.select-trigger {
+  display: flex;
+  align-items: center;
+
+  img {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+  }
+
+  span {
+    margin-left: calc(0.5em + 32px);
+  }
+}
+
+.select-option {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
+
+  span {
+    margin-left: 0.5em;
+  }
+}
