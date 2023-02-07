@@ -8,10 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { GroupMakingComponent } from './container/group-making.component';
-import { ClassPipe } from '../shared/pipes/class.pipe';
-import { RolePipe } from '../shared/pipes/role.pipe';
 import { SelectorClass as SelectorClassComponent } from './components/player-card/selector-class/selector-class.component';
 import { SelectorRole as SelectorRoleComponent } from './components/player-card/selector-role/selector-role.component';
 import { PlayerCardComponent } from './components/player-card/player-card.component';
@@ -34,6 +33,7 @@ import { SharedModule } from '../shared/shared.module';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    MatCheckboxModule,
     SharedModule
   ],
   providers: [],

@@ -17,7 +17,7 @@ import { GroupMakerService } from '../services/group-maker.service';
 export class GroupMakingComponent {
   selectableClasses: PlayerClass[] = ALL_CLASSES;
 
-  creationPlayer: Player = {};
+  creationPlayer: Player = { available: true };
   editionPlayer: Player = {};
   players: Player[] = [];
 
@@ -37,6 +37,7 @@ export class GroupMakingComponent {
           keyLevel: Math.floor(i / 5),
           playerClass: cla,
           role: cla!.availableRoles.find((r) => r.type === 'Tank'),
+          available: true,
         });
       } else if ((i - 1) % 5 === 0) {
         const cla = randClasses.find((cl) =>
@@ -47,6 +48,7 @@ export class GroupMakingComponent {
           keyLevel: Math.floor(i / 5),
           playerClass: cla,
           role: cla!.availableRoles.find((r) => r.type === 'Heal'),
+          available: true,
         });
       } else {
         const cla = randClasses.find((cl) =>
@@ -60,6 +62,7 @@ export class GroupMakingComponent {
           keyLevel: Math.floor(i / 5),
           playerClass: cla,
           role: roles.find((r) => r.type === 'Dps'),
+          available: true,
         });
       }
     }
@@ -109,7 +112,8 @@ export class GroupMakingComponent {
 
   generate() {
     // TODO : check if all cards fulfilled correctly
-    const groups = this.groupMakerService.generateGroups(this.players);
+    const availablePlayers = this.players.filter(player => player.available)
+    const groups = this.groupMakerService.generateGroups(availablePlayers);
     console.log(groups);
     this.groupsGenerated.emit(groups);
   }

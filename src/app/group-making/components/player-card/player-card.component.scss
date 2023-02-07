@@ -5,6 +5,16 @@ mat-card {
 mat-card-content {
   display: flex;
   flex-direction: column;
+
+  .bottom-card-content {
+    display: flex;
+    align-items: center;
+
+    mat-form-field {
+      width: 100px;
+      margin-bottom: -22px;
+    }
+  }
 }
 
 mat-card-actions {

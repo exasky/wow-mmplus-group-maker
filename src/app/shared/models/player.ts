@@ -6,6 +6,7 @@ export interface Player {
   playerClass?: PlayerClass
   role?: CombinedRole
   keyLevel?: number
+  available?: boolean
 }
 
 export const playerHasBl = (p: Player) => p.playerClass?.noticeableSpells.indexOf('BL') !== -1;
