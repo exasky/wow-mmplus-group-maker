@@ -1,12 +1,11 @@
 import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
+  CdkDragDrop, moveItemInArray,
+  transferArrayItem
 } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { saveAs } from 'file-saver';
 import { GroupType } from 'src/app/shared/models/group-type';
 import { Player } from 'src/app/shared/models/player';
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'group-list',

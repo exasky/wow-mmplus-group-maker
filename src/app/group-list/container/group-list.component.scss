@@ -24,6 +24,11 @@
       width: 100px;
     }
 
+    mat-list-item {
+      cursor: move;
+    }
+
+
     .delete-button {
       margin: auto;
     }
@@ -42,5 +47,9 @@
 }
 
 .cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+mat-card.cdk-drop-list-dragging mat-list-item:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
