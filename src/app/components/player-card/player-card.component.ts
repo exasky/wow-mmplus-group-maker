@@ -14,10 +14,10 @@ export class PlayerCardComponent {
   editable: boolean = true;
 
   @Input()
-  updateButton: boolean = false;
+  createButton: boolean = false;
 
   @Input()
-  updateButtonText: string = 'Update';
+  createButtonText: string = 'Create';
 
   @Input()
   deleteButtonText: string = 'Delete';

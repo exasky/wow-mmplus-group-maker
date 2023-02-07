@@ -19,7 +19,7 @@
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions>
-    <button *ngIf="updateButton" mat-raised-button (click)="onUpdate.emit()" color="primary">{{updateButtonText}}</button>
+    <button *ngIf="createButton" mat-raised-button (click)="onUpdate.emit()" color="primary">{{createButtonText}}</button>
     <button
       mat-raised-button
       [color]="deleteButtonColor"

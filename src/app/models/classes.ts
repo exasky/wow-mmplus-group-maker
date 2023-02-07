@@ -74,7 +74,7 @@ export const Mage: PlayerClass = {
 export const Warlock: PlayerClass = {
   name: 'Warlock',
   availableRoles: [{ type: 'Dps', location: 'Ranged' }],
-  noticeableSpells: [],
+  noticeableSpells: ["BR"],
 };
 
 export const Monk: PlayerClass = {
@@ -113,7 +113,7 @@ export const DK: PlayerClass = {
     { type: 'Tank', location: 'Melee' },
     { type: 'Dps', location: 'Melee' },
   ],
-  noticeableSpells: [],
+  noticeableSpells: ['BR'],
 };
 
 export const Evoker: PlayerClass = {

@@ -12,8 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { ClassPipe } from './pipes/class.pipe';
 import { RolePipe } from './pipes/role.pipe';
-import { SelectorClass as SelectorClassComponent } from './components/selector-class/selector-class.component';
-import { SelectorRole as SelectorRoleComponent } from './components/selector-role/selector-role.component';
+import { SelectorClass as SelectorClassComponent } from './components/player-card/selector-class/selector-class.component';
+import { SelectorRole as SelectorRoleComponent } from './components/player-card/selector-role/selector-role.component';
 import { PlayerCardComponent } from './components/player-card/player-card.component';
 
 @NgModule({
