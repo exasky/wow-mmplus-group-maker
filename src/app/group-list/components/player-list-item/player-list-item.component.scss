@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  .role-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .class-icon {
+    width: 30px;
+    height: 30px;
+  }
+}

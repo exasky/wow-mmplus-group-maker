@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
-import { playerHasBl, playerHasBr, Player } from '../models/player';
-
-type GroupType = {
-  players: Player[];
-  keyLevel: number;
-  hasTank: boolean;
-  hasHeal: boolean;
-  dpsNb: number;
-  hasBl: boolean;
-  hasBr: boolean;
-};
+import { GroupType } from 'src/app/shared/models/group-type';
+import { playerHasBl, playerHasBr, Player } from '../../shared/models/player';
 
 @Injectable({ providedIn: 'root' })
 export class GroupMakerService {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Player } from 'src/app/models/player';
+import { Player } from 'src/app/shared/models/player';
 
 @Component({
   selector: 'player-card',

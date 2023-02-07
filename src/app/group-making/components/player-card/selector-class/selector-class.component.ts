@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ALL_CLASSES, PlayerClass } from 'src/app/models/classes';
-import { Player } from 'src/app/models/player';
+import { ALL_CLASSES, PlayerClass } from 'src/app/shared/models/classes';
+import { Player } from 'src/app/shared/models/player';
 
 @Component({
   selector: 'selector-class',

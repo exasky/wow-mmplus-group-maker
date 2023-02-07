@@ -1,0 +1,52 @@
+<div class="header">
+  <h2>Group List</h2>
+  <button mat-raised-button color="primary" (click)="addGroup()">
+    <mat-icon>add</mat-icon>Add group
+  </button>
+  <button mat-raised-button color="primary" (click)="exportGroups()">
+    <mat-icon>upload</mat-icon>Export Groups
+  </button>
+  <button mat-raised-button color="primary" (click)="stepBack.emit()">
+    &lt; Step back
+  </button>
+</div>
+
+<div
+  cdkDropListGroup
+  *ngIf="groupList; else noList"
+  class="group-list-container"
+>
+  <!-- All lists in here will be connected. -->
+  <mat-card
+    cdkDropList
+    [cdkDropListData]="group.players"
+    *ngFor="let group of groupList; let i = index"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <mat-list role="list">
+      <div mat-subheader class="list-header">
+        <mat-form-field>
+          <mat-label>Group name</mat-label>
+          <input matInput [(ngModel)]="group.name" />
+        </mat-form-field>
+        <mat-form-field class="key-level">
+          <mat-label>Key level</mat-label>
+          <input matInput type="number" [(ngModel)]="group.keyLevel" />
+        </mat-form-field>
+      </div>
+      <ng-container *ngFor="let player of group.players">
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem" cdkDrag>
+          <player-list-item [player]="player"></player-list-item>
+        </mat-list-item>
+      </ng-container>
+      <ng-container *ngIf="group.players.length === 0">
+        <button class="delete-button" mat-raised-button color="warn" (click)="deleteGroup(i)">
+          <mat-icon>delete</mat-icon>Delete group
+        </button>
+      </ng-container>
+    </mat-list>
+  </mat-card>
+</div>
+
+<ng-template #noList> No List generated, please update players </ng-template>

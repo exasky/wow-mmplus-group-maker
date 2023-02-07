@@ -1,0 +1,29 @@
+<div class="header">
+  <h2>Player list</h2>
+  <button mat-raised-button color="primary" (click)="exportPlayers()">
+    <mat-icon>upload</mat-icon>Export players
+  </button>
+  <button mat-raised-button color="primary" (click)="fileInput.click()">
+    <mat-icon>download</mat-icon>Import players
+  </button>
+  <input hidden (change)="importPlayers()" #fileInput type="file" id="file">
+  <button mat-raised-button color="primary" (click)="generate()">Generate groups ></button>
+</div>
+
+<div class="player-list">
+  <player-card
+    [player]="creationPlayer"
+    [editable]="true"
+    [createButton]="true"
+    deleteButtonText="Reset"
+    deleteButtonColor="accent"
+    (onUpdate)="addPlayer()"
+    (onDelete)="resetCreationPlayer()"
+  ></player-card>
+
+  <player-card
+    *ngFor="let player of players; let i = index"
+    [player]="player"
+    (onDelete)="deletePlayer(i)"
+  ></player-card>
+</div>
