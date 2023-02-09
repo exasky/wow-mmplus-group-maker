@@ -1,11 +1,16 @@
-<mat-form-field *ngIf="player.playerClass">
-  <mat-select placeholder="Select role" [(value)]="player.role">
+<mat-form-field *ngIf="availableRoles">
+  <mat-select
+    placeholder="Select role"
+    [value]="defaultRole"
+    (valueChange)="newRole.emit($event)"
+  >
     <mat-select-trigger class="select-trigger">
-      <img [src]="player.role | roleIcon" alt="not found" />
-      <span>{{ player.role?.type }}</span>
+      <img [src]="defaultRole | roleIcon" alt="not found" />
+      <span>{{ defaultRole?.type }}</span>
     </mat-select-trigger>
+    <mat-option *ngIf="canResetChoice">None</mat-option>
     <mat-option
-      *ngFor="let availableRole of player.playerClass.availableRoles"
+      *ngFor="let availableRole of availableRoles"
       [value]="availableRole"
     >
       <div class="select-option">

@@ -6,9 +6,13 @@
   <button mat-raised-button color="primary" (click)="fileInput.click()">
     <mat-icon>download</mat-icon>Import players
   </button>
-  <input hidden (change)="importPlayers()" #fileInput type="file" id="file">
-  <button mat-raised-button color="primary" (click)="generate()">Generate groups ></button>
+  <input hidden (change)="importPlayers()" #fileInput type="file" id="file" />
+  <button mat-raised-button color="primary" (click)="generate()">
+    Generate groups >
+  </button>
 </div>
+
+<player-list-filter class="filter-panel" (filterChange)="filterPlayers($event)"></player-list-filter>
 
 <div class="player-list">
   <player-card
@@ -22,7 +26,7 @@
   ></player-card>
 
   <player-card
-    *ngFor="let player of players; let i = index"
+    *ngFor="let player of displayedPlayers; let i = index"
     [player]="player"
     (onDelete)="deletePlayer(i)"
   ></player-card>

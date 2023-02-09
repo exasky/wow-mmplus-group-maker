@@ -4,8 +4,14 @@
   justify-content: space-between;
 }
 
+.filter-panel {
+  display: flex;
+  margin-bottom: 1em;
+}
+
 .player-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
+  justify-content: space-between;
 }

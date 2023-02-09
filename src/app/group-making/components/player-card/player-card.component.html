@@ -7,7 +7,12 @@
   </mat-card-header>
   <mat-card-content>
     <selector-class [player]="player" [editable]="editable"></selector-class>
-    <selector-role [player]="player" [editable]="editable"></selector-role>
+    <selector-role
+      [defaultRole]="player.role"
+      [availableRoles]="player.playerClass?.availableRoles"
+      [editable]="editable"
+      (newRole)="player.role = $event"
+    ></selector-role>
     <div class="bottom-card-content">
       <mat-form-field style="width: 100px">
         <mat-label>Key level</mat-label>

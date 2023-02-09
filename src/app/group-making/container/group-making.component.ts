@@ -4,9 +4,11 @@ import {
   ALL_CLASSES,
   MAP_NAME_CLASS,
   PlayerClass,
+  RoleType,
 } from 'src/app/shared/models/classes';
 import { GroupType } from 'src/app/shared/models/group-type';
 import { Player } from 'src/app/shared/models/player';
+import { PlayerListFilter } from '../components/filter/player-list-filter.component';
 import { GroupMakerService } from '../services/group-maker.service';
 
 @Component({
@@ -19,7 +21,9 @@ export class GroupMakingComponent {
 
   creationPlayer: Player = { available: true };
   editionPlayer: Player = {};
+
   players: Player[] = [];
+  displayedPlayers: Player[] = [];
 
   @Output()
   groupsGenerated: EventEmitter<GroupType[]> = new EventEmitter();
@@ -66,6 +70,8 @@ export class GroupMakingComponent {
         });
       }
     }
+
+    this.filterPlayers({});
   }
 
   exportPlayers() {
@@ -97,8 +103,19 @@ export class GroupMakingComponent {
     }
   }
 
+  filterPlayers(filter: PlayerListFilter) {
+    this.displayedPlayers = this.players.filter(
+      (player) =>
+        (!filter.name ||
+          player.name?.indexOf(filter.name) !== -1) &&
+        (!filter.role || player.role?.type === filter.role.type) &&
+        (filter.keyLevel === undefined || player.keyLevel === filter.keyLevel)
+    );
+  }
+
   addPlayer() {
     this.players.push(this.creationPlayer);
+    this.displayedPlayers.push(this.creationPlayer);
     this.creationPlayer = {};
   }
 
@@ -107,14 +124,14 @@ export class GroupMakingComponent {
   }
 
   deletePlayer(index: number) {
-    this.players.splice(index, 1);
+    const removedPlayer = this.displayedPlayers.splice(index, 1)[0];
+    this.players.splice(this.players.findIndex(p => p === removedPlayer), 1);
   }
 
   generate() {
     // TODO : check if all cards fulfilled correctly
-    const availablePlayers = this.players.filter(player => player.available)
+    const availablePlayers = this.players.filter((player) => player.available);
     const groups = this.groupMakerService.generateGroups(availablePlayers);
-    console.log(groups);
     this.groupsGenerated.emit(groups);
   }
 }

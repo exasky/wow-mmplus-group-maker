@@ -1,19 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ALL_CLASSES, PlayerClass } from 'src/app/shared/models/classes';
-import { Player } from 'src/app/shared/models/player';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CombinedRole } from 'src/app/shared/models/classes';
 
 @Component({
   selector: 'selector-role',
   templateUrl: 'selector-role.component.html',
-  styleUrls: ['../selector-commons.scss']
+  styleUrls: ['../selector-commons.scss'],
 })
-
 export class SelectorRole {
   @Input()
-  player: Player = {}
+  availableRoles?: CombinedRole[] = [];
 
   @Input()
-  editable: boolean = false
+  defaultRole?: CombinedRole;
 
-  selectableClasses: PlayerClass[] = ALL_CLASSES
+  @Input()
+  editable: boolean = false;
+
+  @Input()
+  canResetChoice: boolean = false;
+
+  @Output()
+  newRole: EventEmitter<CombinedRole> = new EventEmitter();
 }
