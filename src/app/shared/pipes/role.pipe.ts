@@ -18,7 +18,8 @@ import {
 } from '../models/classes';
 
 @Pipe({
-  name: 'roleIcon',
+    name: 'roleIcon',
+    standalone: false
 })
 export class RolePipe implements PipeTransform {
   transform(value: CombinedRole | undefined, ...args: any[]): any {

@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "wowmmplus:build:production"
+              "buildTarget": "wowmmplus:build:production"
             },
             "development": {
-              "browserTarget": "wowmmplus:build:development"
+              "buildTarget": "wowmmplus:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "wowmmplus:build"
+            "buildTarget": "wowmmplus:build"
           }
         },
         "test": {
@@ -109,7 +109,6 @@
       }
     }
   },
-  "defaultProject": "wowmmplus",
   "cli": {
     "analytics": false
   }

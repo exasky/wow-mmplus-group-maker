@@ -2,9 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Player } from 'src/app/shared/models/player';
 
 @Component({
-  selector: 'player-card',
-  templateUrl: 'player-card.component.html',
-  styleUrls: ['./player-card.component.scss']
+    selector: 'player-card',
+    templateUrl: 'player-card.component.html',
+    styleUrls: ['./player-card.component.scss'],
+    standalone: false
 })
 export class PlayerCardComponent {
   @Input()

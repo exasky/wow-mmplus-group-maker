@@ -3,9 +3,10 @@ import { MatStepper } from '@angular/material/stepper';
 import { GroupType } from './shared/models/group-type';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
 

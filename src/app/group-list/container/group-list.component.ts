@@ -8,9 +8,10 @@ import { GroupType } from 'src/app/shared/models/group-type';
 import { Player } from 'src/app/shared/models/player';
 
 @Component({
-  selector: 'group-list',
-  templateUrl: 'group-list.component.html',
-  styleUrls: ['./group-list.component.scss'],
+    selector: 'group-list',
+    templateUrl: 'group-list.component.html',
+    styleUrls: ['./group-list.component.scss'],
+    standalone: false
 })
 export class GroupListComponent {
   @Input()

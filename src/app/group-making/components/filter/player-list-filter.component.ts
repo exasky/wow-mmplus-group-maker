@@ -8,9 +8,10 @@ export type PlayerListFilter = {
 };
 
 @Component({
-  selector: 'player-list-filter',
-  templateUrl: 'player-list-filter.component.html',
-  styleUrls: ['player-list-filter.component.scss'],
+    selector: 'player-list-filter',
+    templateUrl: 'player-list-filter.component.html',
+    styleUrls: ['player-list-filter.component.scss'],
+    standalone: false
 })
 export class PlayerListFilterComponent {
   @Output()

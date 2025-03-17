@@ -12,9 +12,10 @@ import { PlayerListFilter } from '../components/filter/player-list-filter.compon
 import { GroupMakerService } from '../services/group-maker.service';
 
 @Component({
-  selector: 'group-making',
-  templateUrl: 'group-making.component.html',
-  styleUrls: ['group-making.component.scss'],
+    selector: 'group-making',
+    templateUrl: 'group-making.component.html',
+    styleUrls: ['group-making.component.scss'],
+    standalone: false
 })
 export class GroupMakingComponent {
   selectableClasses: PlayerClass[] = ALL_CLASSES;
