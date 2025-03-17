@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-gh": "ng build --output-path docs --base-href /wow-mmplus-group-maker/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
