@@ -19,20 +19,28 @@ export class GroupMakerService {
     const returnGroups: GroupType[] = [];
 
     // Start with tanks so create group each time
-    groupedPlayers.Tank.forEach((tank: Player) =>
-      this.addPlayerToNewGroup(tank, returnGroups)
-    );
+    if (groupedPlayers.Tank) {
+      groupedPlayers.Tank.forEach((tank: Player) =>
+        this.addPlayerToNewGroup(tank, returnGroups)
+      );
+    }
 
     // Add heal in groups according to prev tank insertions
-    groupedPlayers.Heal.forEach((heal: Player) => {
-      let grpFound = this.findGroupFor(returnGroups, heal, this.healRoleCheck);
+    if (groupedPlayers.Heal) {
+      groupedPlayers.Heal.forEach((heal: Player) => {
+        let grpFound = this.findGroupFor(
+          returnGroups,
+          heal,
+          this.healRoleCheck
+        );
 
-      if (!grpFound) {
-        this.addPlayerToNewGroup(heal, returnGroups);
-      } else {
-        this.addPlayerToExistingGroup(heal, grpFound);
-      }
-    });
+        if (!grpFound) {
+          this.addPlayerToNewGroup(heal, returnGroups);
+        } else {
+          this.addPlayerToExistingGroup(heal, grpFound);
+        }
+      });
+    }
 
     // Do 2 loops here : first for find 'perfect groups match' and distributing NoticeableSpells
     const aloneDps: Player[] = [];

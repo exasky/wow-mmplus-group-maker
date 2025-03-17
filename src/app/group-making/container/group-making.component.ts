@@ -4,7 +4,6 @@ import {
   ALL_CLASSES,
   MAP_NAME_CLASS,
   PlayerClass,
-  RoleType,
 } from 'src/app/shared/models/classes';
 import { GroupType } from 'src/app/shared/models/group-type';
 import { Player } from 'src/app/shared/models/player';
@@ -12,10 +11,10 @@ import { PlayerListFilter } from '../components/filter/player-list-filter.compon
 import { GroupMakerService } from '../services/group-maker.service';
 
 @Component({
-    selector: 'group-making',
-    templateUrl: 'group-making.component.html',
-    styleUrls: ['group-making.component.scss'],
-    standalone: false
+  selector: 'group-making',
+  templateUrl: 'group-making.component.html',
+  styleUrls: ['group-making.component.scss'],
+  standalone: false,
 })
 export class GroupMakingComponent {
   selectableClasses: PlayerClass[] = ALL_CLASSES;
@@ -30,6 +29,10 @@ export class GroupMakingComponent {
   groupsGenerated: EventEmitter<GroupType[]> = new EventEmitter();
 
   constructor(private groupMakerService: GroupMakerService) {
+  }
+
+  randomize() {
+    this.players = [];
     // For debug
     for (var i = 0; i < 18; i++) {
       let randClasses = [...ALL_CLASSES].sort((a, b) => 0.5 - Math.random());
@@ -71,7 +74,6 @@ export class GroupMakingComponent {
         });
       }
     }
-
     this.filterPlayers({});
   }
 
@@ -107,8 +109,7 @@ export class GroupMakingComponent {
   filterPlayers(filter: PlayerListFilter) {
     this.displayedPlayers = this.players.filter(
       (player) =>
-        (!filter.name ||
-          player.name?.indexOf(filter.name) !== -1) &&
+        (!filter.name || player.name?.indexOf(filter.name) !== -1) &&
         (!filter.role || player.role?.type === filter.role.type) &&
         (filter.keyLevel === undefined || player.keyLevel === filter.keyLevel)
     );
@@ -126,7 +127,10 @@ export class GroupMakingComponent {
 
   deletePlayer(index: number) {
     const removedPlayer = this.displayedPlayers.splice(index, 1)[0];
-    this.players.splice(this.players.findIndex(p => p === removedPlayer), 1);
+    this.players.splice(
+      this.players.findIndex((p) => p === removedPlayer),
+      1
+    );
   }
 
   generate() {
