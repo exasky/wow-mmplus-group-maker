@@ -1,17 +1,21 @@
 <mat-form-field>
-  <mat-select placeholder="Select class" [(value)]="player.playerClass" [disabled]="!editable">
+  <mat-select
+    placeholder="Select class"
+    [(value)]="player.playerClass"
+    [disabled]="!editable"
+    [compareWith]="compareWith"
+  >
     <mat-select-trigger class="select-trigger">
       <img [src]="player.playerClass | classIcon" alt="not found" />
       <span>{{ player.playerClass?.name }}</span>
     </mat-select-trigger>
-    <mat-option
-      *ngFor="let selectableClass of selectableClasses"
-      [value]="selectableClass"
-    >
+    @for (selectableClass of selectableClasses; track $index) {
+    <mat-option [value]="selectableClass">
       <div class="select-option">
         <img [src]="selectableClass | classIcon" alt="not found" />
         <span>{{ selectableClass.name }}</span>
       </div>
     </mat-option>
+    }
   </mat-select>
 </mat-form-field>

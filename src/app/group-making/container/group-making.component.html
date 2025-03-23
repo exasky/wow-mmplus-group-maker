@@ -15,7 +15,10 @@
   </button>
 </div>
 
-<player-list-filter class="filter-panel" (filterChange)="filterPlayers($event)"></player-list-filter>
+<player-list-filter
+  class="filter-panel"
+  (filterChange)="filterPlayers($event)"
+></player-list-filter>
 
 <div class="player-list">
   <player-card
@@ -28,9 +31,7 @@
     (onDelete)="resetCreationPlayer()"
   ></player-card>
 
-  <player-card
-    *ngFor="let player of displayedPlayers; let i = index"
-    [player]="player"
-    (onDelete)="deletePlayer(i)"
-  ></player-card>
+  @for (player of displayedPlayers; track $index) {
+  <player-card [player]="player" (onDelete)="deletePlayer($index)" />
+  }
 </div>

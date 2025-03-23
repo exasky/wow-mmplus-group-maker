@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { saveAs } from 'file-saver';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { saveAsJSON } from 'src/app/shared/file-saver';
 import {
   ALL_CLASSES,
   MAP_NAME_CLASS,
@@ -7,16 +10,27 @@ import {
 } from 'src/app/shared/models/classes';
 import { GroupType } from 'src/app/shared/models/group-type';
 import { Player } from 'src/app/shared/models/player';
-import { PlayerListFilter } from '../components/filter/player-list-filter.component';
+import {
+  PlayerListFilter,
+  PlayerListFilterComponent,
+} from '../components/filter/player-list-filter.component';
+import { PlayerCardComponent } from '../components/player-card/player-card.component';
 import { GroupMakerService } from '../services/group-maker.service';
+import { GroupSaverService } from '../services/saver.service';
 
 @Component({
   selector: 'group-making',
+  imports: [
+    MatButtonModule,
+    MatIcon,
+    PlayerListFilterComponent,
+    PlayerCardComponent,
+    CommonModule,
+  ],
   templateUrl: 'group-making.component.html',
   styleUrls: ['group-making.component.scss'],
-  standalone: false,
 })
-export class GroupMakingComponent {
+export class GroupMakingComponent implements OnInit {
   selectableClasses: PlayerClass[] = ALL_CLASSES;
 
   creationPlayer: Player = { available: true };
@@ -24,18 +38,24 @@ export class GroupMakingComponent {
 
   players: Player[] = [];
   displayedPlayers: Player[] = [];
+  filter: PlayerListFilter = {};
 
   @Output()
   groupsGenerated: EventEmitter<GroupType[]> = new EventEmitter();
 
-  constructor(private groupMakerService: GroupMakerService) {
+  constructor(private groupMakerService: GroupMakerService, private groupSaverService: GroupSaverService) {
+  }
+
+  ngOnInit(): void {
+    this.players = this.groupSaverService.loadFromLs()
+    this.filterPlayers(this.filter)
   }
 
   randomize() {
     this.players = [];
     // For debug
     for (var i = 0; i < 18; i++) {
-      let randClasses = [...ALL_CLASSES].sort((a, b) => 0.5 - Math.random());
+      let randClasses = [...ALL_CLASSES].sort(() => 0.5 - Math.random());
       if (i % 5 === 0) {
         const cla = randClasses.find((cl) =>
           cl.availableRoles.find((r) => r.type === 'Tank')
@@ -62,9 +82,7 @@ export class GroupMakingComponent {
         const cla = randClasses.find((cl) =>
           cl.availableRoles.find((r) => r.type === 'Dps')
         );
-        const roles = [...cla!.availableRoles].sort(
-          (a, b) => 0.5 - Math.random()
-        );
+        const roles = [...cla!.availableRoles].sort(() => 0.5 - Math.random());
         this.players.push({
           name: 'Dps' + Math.floor(i / 5),
           keyLevel: Math.floor(i / 5),
@@ -74,14 +92,11 @@ export class GroupMakingComponent {
         });
       }
     }
-    this.filterPlayers({});
+    this.filterPlayers(this.filter);
   }
 
   exportPlayers() {
-    saveAs(
-      new Blob([JSON.stringify(this.players)], { type: 'JSON' }),
-      `wow-groups-${new Date().toISOString()}.json`
-    );
+    saveAsJSON(JSON.stringify(this.players), `wow-groups-${new Date().toISOString()}.json`);
   }
 
   importPlayers() {
@@ -100,6 +115,7 @@ export class GroupMakingComponent {
               role.location === player.role.location
           );
         });
+        this.filterPlayers(this.filter)
       };
 
       reader.readAsText(inputNode.files[0]);
@@ -107,6 +123,7 @@ export class GroupMakingComponent {
   }
 
   filterPlayers(filter: PlayerListFilter) {
+    this.filter = filter;
     this.displayedPlayers = this.players.filter(
       (player) =>
         (!filter.name || player.name?.indexOf(filter.name) !== -1) &&
@@ -119,6 +136,7 @@ export class GroupMakingComponent {
     this.players.push(this.creationPlayer);
     this.displayedPlayers.push(this.creationPlayer);
     this.creationPlayer = {};
+    this.groupSaverService.saveInLS(this.players)
   }
 
   resetCreationPlayer() {
@@ -131,10 +149,13 @@ export class GroupMakingComponent {
       this.players.findIndex((p) => p === removedPlayer),
       1
     );
+    this.groupSaverService.saveInLS(this.players)
   }
 
   generate() {
-    // TODO : check if all cards fulfilled correctly
+    // TODO : check if all cards fulfilled correctly -> Use FormGroups :)
+    // Then this.form.onChange(() => saveInLS)
+    this.groupSaverService.saveInLS(this.players)
     const availablePlayers = this.players.filter((player) => player.available);
     const groups = this.groupMakerService.generateGroups(availablePlayers);
     this.groupsGenerated.emit(groups);

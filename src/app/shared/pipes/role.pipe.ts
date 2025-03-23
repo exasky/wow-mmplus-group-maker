@@ -1,25 +1,10 @@
 import { Pipe, PipeTransform, Type } from '@angular/core';
 import {
-  PlayerClass,
-  DH,
-  DK,
-  Druid,
-  Evoker,
-  Hunter,
-  Mage,
-  Monk,
-  Paladin,
-  Priest,
-  Rogue,
-  Shaman,
-  Warlock,
-  Warrior,
   CombinedRole,
 } from '../models/classes';
 
 @Pipe({
-    name: 'roleIcon',
-    standalone: false
+  name: 'roleIcon',
 })
 export class RolePipe implements PipeTransform {
   transform(value: CombinedRole | undefined, ...args: any[]): any {

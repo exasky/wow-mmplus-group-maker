@@ -1,22 +1,25 @@
-<mat-form-field *ngIf="availableRoles">
+@if (availableRoles()) {
+<mat-form-field>
   <mat-select
     placeholder="Select role"
-    [value]="defaultRole"
+    [value]="defaultRole()"
     (valueChange)="newRole.emit($event)"
+    [compareWith]="compareWith"
   >
     <mat-select-trigger class="select-trigger">
-      <img [src]="defaultRole | roleIcon" alt="not found" />
-      <span>{{ defaultRole?.type }}</span>
+      <img [src]="defaultRole() | roleIcon" alt="not found" />
+      <span>{{ defaultRole()?.type }}</span>
     </mat-select-trigger>
-    <mat-option *ngIf="canResetChoice">None</mat-option>
-    <mat-option
-      *ngFor="let availableRole of availableRoles"
-      [value]="availableRole"
-    >
+    @if (canResetChoice()) {
+    <mat-option>None</mat-option>
+    } @for (availableRole of availableRoles(); track $index) {
+    <mat-option [value]="availableRole">
       <div class="select-option">
         <img [src]="availableRole | roleIcon" alt="not found" />
         <span>{{ availableRole.type }}</span>
       </div>
     </mat-option>
+    }
   </mat-select>
 </mat-form-field>
+}

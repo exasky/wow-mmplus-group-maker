@@ -17,8 +17,7 @@ import {
 } from '../models/classes';
 
 @Pipe({
-    name: 'classIcon',
-    standalone: false
+  name: 'classIcon',
 })
 export class ClassPipe implements PipeTransform {
   transform(value: PlayerClass | undefined, ...args: any[]): any {

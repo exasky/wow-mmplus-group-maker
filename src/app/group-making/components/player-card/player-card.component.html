@@ -6,11 +6,14 @@
     </mat-form-field>
   </mat-card-header>
   <mat-card-content>
-    <selector-class [player]="player" [editable]="editable"></selector-class>
+    <selector-class
+      [player]="player"
+      [editable]="editable()"
+    ></selector-class>
     <selector-role
       [defaultRole]="player.role"
-      [availableRoles]="player.playerClass?.availableRoles"
-      [editable]="editable"
+      [availableRoles]="player.playerClass?.availableRoles || []"
+      [editable]="editable()"
       (newRole)="player.role = $event"
     ></selector-role>
     <div class="bottom-card-content">
@@ -19,6 +22,7 @@
         <input
           matInput
           type="number"
+          min="0"
           [(ngModel)]="player.keyLevel"
           [disabled]="!editable"
         />
@@ -27,20 +31,17 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button
-      *ngIf="createButton"
-      mat-raised-button
-      (click)="onUpdate.emit()"
-      color="primary"
-    >
-      {{ createButtonText }}
+    @if (createButton()) {
+    <button mat-raised-button (click)="onUpdate.emit($event)" color="primary">
+      {{ createButtonText() }}
     </button>
+    }
     <button
       mat-raised-button
-      [color]="deleteButtonColor"
-      (click)="onDelete.emit()"
+      [color]="deleteButtonColor()"
+      (click)="onDelete.emit($event)"
     >
-      {{ deleteButtonText }}
+      {{ deleteButtonText() }}
     </button>
   </mat-card-actions>
 </mat-card>

@@ -1,29 +1,60 @@
 import {
-  CdkDragDrop, moveItemInArray,
-  transferArrayItem
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+  transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { saveAs } from 'file-saver';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  input,
+  Input,
+  linkedSignal,
+  output,
+  Output,
+  signal,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatInputModule } from '@angular/material/input';
 import { GroupType } from 'src/app/shared/models/group-type';
 import { Player } from 'src/app/shared/models/player';
+import { PlayerListItemComponent } from '../components/player-list-item/player-list-item.component';
+import { saveAsCSV } from 'src/app/shared/file-saver';
 
 @Component({
-    selector: 'group-list',
-    templateUrl: 'group-list.component.html',
-    styleUrls: ['./group-list.component.scss'],
-    standalone: false
+  selector: 'group-list',
+  imports: [
+    MatButtonModule,
+    MatIcon,
+    MatCardModule,
+    DragDropModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CommonModule,
+    FormsModule,
+    PlayerListItemComponent,
+  ],
+  templateUrl: 'group-list.component.html',
+  styleUrls: ['./group-list.component.scss'],
 })
 export class GroupListComponent {
-  @Input()
-  groupList: GroupType[] | undefined;
+  groupList = input<GroupType[]>([]);
+  computedGroups = linkedSignal(() => this.groupList())
 
-  @Output()
-  stepBack: EventEmitter<void> = new EventEmitter();
+  stepBack = output<void>();
 
   constructor() {}
 
   addGroup() {
-    this.groupList?.push({
+    this.computedGroups.set([...this.computedGroups(),{
       dpsNb: 0,
       hasBl: false,
       hasHeal: false,
@@ -32,11 +63,13 @@ export class GroupListComponent {
       keyLevel: 0,
       players: [],
       name: '',
-    });
+    }])
   }
 
   deleteGroup(index: number) {
-    this.groupList?.splice(index, 1);
+    const groups = this.computedGroups()
+    groups.splice(index, 1);
+    this.computedGroups.set(groups)
   }
 
   exportGroups() {
@@ -45,7 +78,7 @@ export class GroupListComponent {
     const replacer = (_: any, value: any) => (value === null ? '' : value); // specify how you want to handle null values here
 
     const fieldsToExport: (keyof GroupType)[] = ['name', 'keyLevel', 'players'];
-    let csv = this.groupList!.map((row) =>
+    let csv = this.groupList().map((row) =>
       fieldsToExport
         .flatMap((fieldName) => {
           if (fieldName !== 'players')
@@ -68,8 +101,7 @@ export class GroupListComponent {
     );
     let csvArray = csv.join('\r\n');
 
-    var blob = new Blob([csvArray], { type: 'text/csv' });
-    saveAs(blob, `wow-group-list-export-${new Date().toISOString()}.csv`);
+    saveAsCSV(csvArray, `wow-group-list-export-${new Date().toISOString()}.csv`)
   }
 
   drop(event: CdkDragDrop<Player[]>) {
